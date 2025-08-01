@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dice Roller</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <h1>🎲 Welcome to the Dice Roller 🎲</h1>
+
+  <!-- Dice Display -->
+  <div id="dice-container">
+    <img id="die1" src="/static/images/land1.png" alt="Die 1" width="100">
+    <img id="die2" src="/static/images/land1.png" alt="Die 2" width="100">
+  </div>
+
+  <!-- Result Text -->
+  <p id="result">Click "Roll Dice" to begin!</p>
+
+  <!-- Roll Button -->
+  <button id="rollBtn">Roll Dice</button>
+
+  <!-- Animation Script -->
+  <script>
+    document.getElementById('rollBtn').addEventListener('click', () => {
+      const die1 = document.getElementById('die1');
+      const die2 = document.getElementById('die2');
+      const result = document.getElementById('result');
+
+      let frame = 1;
+      const maxFrames = 9;
+
+      result.textContent = 'Rolling...';
+
+      const animation = setInterval(() => {
+        die1.src = `/static/images/rolling${frame}.png`;
+        die2.src = `/static/images/rolling${frame}.png`;
+        frame = frame < maxFrames ? frame + 1 : 1;
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(animation);
+        fetch('/roll')
+          .then(response => response.json())
+          .then(data => {
+            die1.src = `/static/images/land${data.die1}.png`;
+            die2.src = `/static/images/land${data.die2}.png`;
+            result.textContent =
+              `You rolled ${data.die1} + ${data.die2} = ${data.total}` +
+              (data.is_double ? ` — Doubles! 🎉` : '');
+          });
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>

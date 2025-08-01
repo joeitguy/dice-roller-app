@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+*.sqlite3
+*.db
+*.log
+*.pid
+*.tar
+*.gz
+*.img
+*.container

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dice Result</title>
+</head>
+<body>
+    <h1>🎲 You rolled!</h1>
+<img src="{{ url_for('static', filename='images/land' ~ die1 ~ '.png') }}" alt="Die 1">
+<img src="{{ url_for('static', filename='images/land' ~ die2 ~ '.png') }}" alt="Die 2">
+    <h2>Total: {{ sum_total }}</h2>
+    {% if is_double %}
+        <h3>✨ Doubles! You rolled two {{ die1 }}s!</h3>
+    {% endif %}
+    <br>
+    <a href="/">Roll Again</a>
+</body>
+</html>
